@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdbool.h>
+bool isPrime(int n, int divisor) {
+    if (n <= 1)
+        return false;
+    if (divisor == 1)
+        return true; 
+    if (n % divisor == 0 && divisor != n)
+        return false;
+    return isPrime(n, divisor - 1);
+}
+void printPrimes(int limit, int current) {
+    if (current > limit)
+        return;
+    if (isPrime(current, current / 2)) {
+        printf("%d ", current);
+    }
+
+    printPrimes(limit, current + 1);
+}
+int main() {
+    int n;
+    printf("Enter the limit to generate prime numbers up to: ");
+    scanf("%d", &n);
+    printf("Prime numbers up to %d are: \n", n);
+    printPrimes(n, 2);
+    printf("\n");
+    return 0;
+}

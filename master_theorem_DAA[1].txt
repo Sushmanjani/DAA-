@@ -1,0 +1,56 @@
+import math
+import time
+def master_theorem():
+    print("Master Theorem Analysis:")
+    # For T(n) = aT(n/b) + f(n), here a = 2, b = 2, f(n) = n
+    a = 2
+    b = 2
+    f = lambda n: n
+    log_b_a = math.log(a, b)
+    f_n = f(1)  
+    if f_n == 1:
+        case = 2 
+    elif f_n < 1:
+        case = 1 
+    else:
+        case = 3   
+    print(f"For T(n) = 2T(n/2) + n")
+    if case == 1:
+        print(f"Since n^log_b(a) > f(n), T(n) = Theta(n^log_b(a)) = Theta(n^{log_b_a})")
+    elif case == 2:
+        print(f"Since n^log_b(a) == f(n), T(n) = Theta(n^log_b(a) * log(n)) = Theta(n^{log_b_a} * log(n))")
+    else:
+        print(f"Since n^log_b(a) < f(n), T(n) = Theta(f(n)) = Theta(n)")
+    print()
+def substitution_method(n):
+    print("Substitution Method Analysis:")
+    T = lambda n: 2 * T(n // 2) + n if n > 1 else 1
+    try:
+        print(f"Guess T(n) = O(n log n)")
+        T_n = 2 * T(n // 2) + n
+        print(f"T(n) = 2T(n/2) + n = 2O((n/2) log (n/2)) + n = O(n log n)")
+    except RecursionError:
+        print("Reached maximum recursion depth. This illustrates the substitution method process.")
+    print()
+def iteration_method(n):
+    print("Iteration Method Analysis:")
+    level = 0
+    T = 1 
+    size = n
+    total = 0
+    while size > 1:
+        work = 2**level * size
+        total += work
+        size //= 2
+        level += 1
+    total += n  
+    print(f"T(n) = {total} = O(n log n)")
+    print()
+def main():
+    n = 16     
+    print(f"Analyzing recurrence relation T(n) = 2T(n/2) + n for n = {n}")    
+    master_theorem()    
+    substitution_method(n)    
+    iteration_method(n)
+if __name__ == "__main__":
+    main()

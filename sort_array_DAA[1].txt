@@ -1,0 +1,35 @@
+#include <stdio.h>
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void sortArray(int nums[], int numsSize) {
+    int oddIndex = 1;
+    int evenIndex = 0;
+    while (oddIndex < numsSize && evenIndex < numsSize) {
+        while (oddIndex < numsSize && nums[oddIndex] % 2 != 0)
+            oddIndex += 2;
+        while (evenIndex < numsSize && nums[evenIndex] % 2 == 0)
+            evenIndex += 2;
+        if (oddIndex < numsSize && evenIndex < numsSize) {
+            swap(&nums[oddIndex], &nums[evenIndex]);
+        }
+    }
+}
+void printArray(int nums[], int numsSize) {
+    for (int i = 0; i < numsSize; i++) {
+        printf("%d ", nums[i]);
+    }
+    printf("\n");
+}
+int main() {
+    int nums[] = {4, 2, 5, 7, 6, 3};
+    int numsSize = sizeof(nums) / sizeof(nums[0]);
+    printf("Original array: ");
+    printArray(nums, numsSize);
+    sortArray(nums, numsSize);
+    printf("Sorted array: ");
+    printArray(nums, numsSize);
+    return 0;
+}
